@@ -489,18 +489,18 @@ resource "aws_iam_policy" "ALBIngressControllerIAMPolicy" {
 
 resource "null_resource" "kubectlcommands" {
   provisioner "local-exec" {
-    command = "cd ../../roelstage/stagekubernetes && sh ./prodstartkubernetes.sh && sh ./devstartkubernetes.sh"
+    command = "cd ../../../roelstage/stagekubernetes && sh ./prodstartkubernetes.sh && sh ./devstartkubernetes.sh"
   }
   depends_on = [resource.aws_eks_cluster.prodcluster,resource.aws_eks_cluster.dtacluster,resource.aws_iam_role.ProdClusterIAMRole,resource.aws_iam_role.DTAClusterIAMRole,resource.aws_eks_node_group.prodnodegroup,resource.aws_eks_node_group.dtanodegroup]
 }
 
 data "local_file" "albnamedta" {
-  filename = "../../roelstage/stagekubernetes/albnamedta"
+  filename = "../../../roelstage/stagekubernetes/albnamedta"
   depends_on = [resource.null_resource.kubectlcommands]
 }
 
 data "local_file" "albnameprod" {
-  filename = "../../roelstage/stagekubernetes/albnameprod"
+  filename = "../../../roelstage/stagekubernetes/albnameprod"
   depends_on = [resource.null_resource.kubectlcommands]
 }
 
